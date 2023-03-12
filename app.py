@@ -1,11 +1,6 @@
 import streamlit as st
 import pandas as pd
 import plotly_express as px
-
-st.header('Sprint 4: SDA US SUV Vehicles Analysis')
-# %%
-import pandas as pd
-import plotly.express as px
 import numpy as np
 from scipy import stats as stat
 from matplotlib import pyplot as plt
@@ -74,11 +69,11 @@ dom_time=excellent_suv_dom.groupby(['make','model_year'])['days_listed'].mean().
 int_time=excellent_suv_int.groupby(['make','model_year'])['days_listed'].mean().reset_index()
 
 # %%
-fig_dom_time = px.histogram(dom_time, x="model_year", y="days_listed",color='make', barmode='group', labels={"model_year":"Year", "days_listed":"Days"}, title="Days vs SUV Make and Year")
+fig_dom_time = px.histogram(dom_time, x="model_year", y="days_listed",color='make', barmode='group', labels={"model_year":"Year", "days_listed":"Days"}, title="Days vs Domestic Make SUV and Year")
 #fig_dom_time.show()
 
 # %%
-fig_int_time = px.histogram(int_time, x="model_year", y="days_listed",color='make', barmode='group', labels={"model_year":"Year", "days_listed":"Days"}, title="Days vs SUV Make and Year")
+fig_int_time = px.histogram(int_time, x="model_year", y="days_listed",color='make', barmode='group', labels={"model_year":"Year", "days_listed":"Days"}, title="Days vs Foreign Make SUV and Year")
 #fig_int_time.show()
 
 # %%
@@ -113,11 +108,11 @@ dom_price=excellent_suv_dom.groupby(['make','model_year'])['price'].mean().reset
 int_price=excellent_suv_int.groupby(['make','model_year'])['price'].mean().reset_index()
 
 # %%
-fig_dom_price = px.scatter(dom_price, x="model_year", y="price",color='make', labels={"model_year":"Year", "price":"USD"}, title="Price vs SUV Make and Year")
+fig_dom_price = px.scatter(dom_price, x="model_year", y="price",color='make', labels={"model_year":"Year", "price":"USD"}, title="Price vs Domestic Make SUV and Year")
 #fig_dom_price.show()
 
 # %%
-fig_int_price = px.scatter(int_price, x="model_year", y="price",color='make', labels={"model_year":"Year", "price":"USD"}, title="Price vs SUV Make and Year")
+fig_int_price = px.scatter(int_price, x="model_year", y="price",color='make', labels={"model_year":"Year", "price":"USD"}, title="Price vs Foreign Make SUV and Year")
 #fig_int_price.show()
 
 # %%
@@ -144,12 +139,20 @@ if results.pvalue < alpha:
 else:
     print("We can't reject the null hypothesis")
 
+st.header('Sprint 4: SDA US SUV Vehicles Analysis')
+
+txt = st.text_area('Analysis description', 'SUV is a popular type of vehical, like its name suggest it has a wide utility. This project is going to analyze how the domestic and foreign make SUV compare in couple factors. First being how long they are posted before being sold. Second being how the price of the SUV compares.')
+
 st.plotly_chart(fig_dom_time, theme=None, use_container_width=True)
 st.plotly_chart(fig_int_time, theme=None, use_container_width=True)
+
+different_time=st.checkbox('Are the amount of time Foreign and Domestic Make SUV posted statistically different?')
+if different_time:
+    st.write('They are not statistically diifferent')
 
 st.plotly_chart(fig_dom_price, theme=None, use_container_width=True)
 st.plotly_chart(fig_int_price, theme=None, use_container_width=True)
 
-different=st.checkbox('Are the analysis between Foreign and Domestic SUV Satistically Different?')
-if different:
-    st.write('They are not')
+different_price=st.checkbox('Are the price between Foreign and Domestic Make SUV Satistically Different?')
+if different_price:
+    st.write('They are not statistically diifferent')
