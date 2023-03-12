@@ -8,7 +8,6 @@ import pandas as pd
 import plotly.express as px
 import numpy as np
 from scipy import stats as stat
-import numpy as np
 from matplotlib import pyplot as plt
 
 # %%
