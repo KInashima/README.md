@@ -1,13 +1,13 @@
 # %% [markdown]
-# Sprint 4: SDT US SUV Vehicles Analysis
+# Sprint 4: SDA US SUV Vehicles Analysis
 
 # %% [markdown]
 # This notebook is going to follow through the process of how the vehicle data is imported, preprocessed through the data for adequate processing, data are grouped, and analysed for statistical significance.
 # 
 # The vehicle data is analyzed through the condition of the vehicle, to compare between following factors:
 # 
-# 1. The posting length vs foreign or dommestic SUV
-# 2. The price vs foreign or domestic SUV
+# 1. The posting length vs foreign or dommestic SUV make and model year
+# 2. The price vs foreign or domestic SUV make and model year
 # 
 
 # %%
@@ -22,7 +22,7 @@ from matplotlib import pyplot as plt
 # Necessary packages are imported
 
 # %%
-st.header('Sprint 4: SDT US SUV Vehicles Analysis')
+st.header('Sprint 4: SDA US SUV Vehicles Analysis')
 txt = st.text_area('Analysis description', 'SUV is a popular type of vehicle, like its name, suggests it has a wide utility. This project is going to analyze how domestic and foreign make SUVs compare in a couple of factors. The first is how long they are posted before being sold. Second, is how the price of the SUV compares. Finally, they were both compared through the SUV condition')
 
 
@@ -34,7 +34,7 @@ print(veh_info_df)
 veh_info_df['date_posted']=pd.to_datetime(veh_info_df['date_posted'],format='%Y-%m-%d')
 
 # %%
-veh_info_df=veh_info_df.dropna(subset='model_year')
+veh_info_df=veh_info_df.dropna(subset=['model_year'])
 veh_info_df=veh_info_df.fillna(0)
 veh_info_df['paint_color']=veh_info_df['paint_color'].replace([0],'missing')
 veh_info_df.info()
@@ -44,7 +44,7 @@ veh_info_df=veh_info_df.astype({'price':'float64','model_year':'float64','cylind
 veh_info_df=veh_info_df.astype({'price':'int64','model_year':'int64','cylinders':'int64','is_4wd':'int64','days_listed':'int64'})
 
 # %% [markdown]
-# Up to this point the format of the data are reviewed, and the data type of certain columns are changed for appropriate processing. Especially certain data type that were object are changed to integers. 
+# Up to this point the format of the data are reviewed, and the data type of certain columns are changed for appropriate processing. Especially certain data type that were object are changed to integers. The missing data were selectively modified. The model_year were removed due to being an important factor in the analysis. The other missing datas are either changed to 0, or stringed as 'missing'
 
 # %%
 veh_info_df['model'] = veh_info_df['model'].astype(str)
@@ -81,7 +81,7 @@ replace_wrong_values(f350_wrong_names, f350)
 # 
 
 # %% [markdown]
-# Analyzing the mean posting days between domestic and foreign SUV make and their model years
+# Analyzing the mean days posted between domestic and foreign SUV make and their model years
 
 # %%
 states=['good', 'like new', 'fair', 'excellent', 'salvage', 'new']
@@ -136,9 +136,9 @@ st.text_area('P Value, if below 0.05 reject null hypothesis', hypo_results.pvalu
 # %% [markdown]
 # Unique list for condition of the car was isolated. Then Select box was created to filter through the condition of the cars. The vehicles data were queried to group between foreign and domestic make of cars, and filtered for SUV type cars. The filtered and quired data was then filtered through the selectbox condition to filter through the condition of the cars. 
 # 
-# The make and model year data were filtered through the days listed, and get their mean. This was used to make a histogram, and passed through streamlit.
+# The make and model year data were correlated with the days listed, and get their mean. This was used to make a histogram, and passed through streamlit.
 # 
-# The data was passed through statistical analysis, to find mean, variance,  standard deviation, and t test.
+# The data was passed through statistical analysis, to find mean, variance,  standard deviation, and t tested.
 
 # %% [markdown]
 # 
@@ -191,8 +191,10 @@ st.text_area('P Value, if below 0.05 reject null hypothesis', hypo2_results.pval
 # %% [markdown]
 # Conclusion:
 # 
-# The selectbox appropriately filters brough the conditions of the cars, and changes the behavior of the charts. The chart thats created appropriately represents the conditions set. 
+# The selectbox appropriately filters through the conditions of the cars, and changes the behavior of the charts. The chart thats created appropriately represents the conditions set. The analytical data and the t test varies based upon the condition of the SUV.
 # 
-# The analysis indicates that there is no statistical difference in the days listed between foreign and domestic make of the SUV, through all the conditions. For the pricing there is statistical difference in the price between foreign and domestic make SUV, for the excellent and like new conditioned SUV.
+# The analysis indicates that there is no statistical difference in the days listed between foreign and domestic make of the SUV, through all the conditions. In retrospect, for the pricing there is statistical difference in the price between foreign and domestic make SUV, for the excellent and like new conditioned SUV.
+# 
+# Though, a large amount of data were removed due to the missing model years, the removal of those data were necessary for further processing of the data. 
 
 
