@@ -53,10 +53,7 @@ veh_info_df['make'] = veh_info_df['model'].apply(lambda x: x.split()[0])
 
 # %%
 print(veh_info_df['make'].unique())
-
-# %%
 unique_model=veh_info_df['model'].unique()
-print(sorted(unique_model))
 
 # %%
 f150_wrong_names=['ford f-150']
@@ -66,7 +63,6 @@ f150='ford f150'
 f250='ford f250'
 f350='ford f350'
 
-# %%
 def replace_wrong_values(wrong_values, correct_value):
     for wrong_value in wrong_values:
         veh_info_df['model'] = veh_info_df['model'].replace(wrong_value, correct_value)
