@@ -8,6 +8,7 @@
 # 
 # 1. The posting length vs foreign or dommestic SUV make and model year
 # 2. The price vs foreign or domestic SUV make and model year
+# 3. Last an option of comparing these variables for SUV model within the last 10 years.
 # 
 
 # %%
@@ -86,6 +87,14 @@ replace_wrong_values(f350_wrong_names, f350)
 # %%
 states=['good', 'like new', 'fair', 'excellent', 'salvage', 'new']
 cond_suv=st.selectbox("Condition of SUV", states)
+
+# %%
+recent=st.checkbox('SUV within Last 10 years')
+if recent:
+    veh_info_df=veh_info_df[veh_info_df['model_year']>2009]
+
+# %% [markdown]
+# Checkbox was added to compare recent car models within the 10 years of the data which is 2009.
 
 # %%
 domesetic_maker=['chrysler','chevrolet','gmc','ram', 'jeep','ford','dodge', 'buick','cadillac']
@@ -193,7 +202,9 @@ st.text_area('P Value, if below 0.05 reject null hypothesis', hypo2_results.pval
 # 
 # The selectbox appropriately filters through the conditions of the cars, and changes the behavior of the charts. The chart thats created appropriately represents the conditions set. The analytical data and the t test varies based upon the condition of the SUV.
 # 
-# The analysis indicates that there is no statistical difference in the days listed between foreign and domestic make of the SUV, through all the conditions. In retrospect, for the pricing there is statistical difference in the price between foreign and domestic make SUV, for the excellent and like new conditioned SUV.
+# The analysis indicates that there is no statistical difference in the days listed between foreign and domestic make of the SUV, through all the conditions. In retrospect, for the pricing there is statistical difference in the price between foreign and domestic make SUV, for the excellent and like new conditioned SUV. 
+# 
+# Within the last 10 years of the recent models price difference between the foreign and domestic make SUV were significant for like new, excellent, and good. 
 # 
 # Though, a large amount of data were removed due to the missing model years, the removal of those data were necessary for further processing of the data. 
 
